@@ -1,0 +1,49 @@
+﻿@page
+@model IndexModel
+@using System.Collections.Generic;
+@{
+
+    ViewData["Title"] = "Home page";
+
+    var clientIP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+    var serverIP = Request.HttpContext.Connection.LocalIpAddress.ToString();
+    var serverPort = Request.HttpContext.Connection.LocalPort.ToString();
+    var serverURL = Request.Host.Value;
+
+    var cookies = Request.Cookies;
+    var requestBody = Request.Body.ToString();
+}
+<div class="row">
+    <div class="col-md-10">
+        <h2>Request info</h2>
+        <h3>Client:</h3>
+        IP Address: @clientIP
+        <h3>Server:</h3>
+        <p>URL: @serverURL </p>
+        <p>IP and Port: @serverIP : @serverPort</p>
+        <h3>Cookies</h3>
+        <ul>
+            @foreach(var ck in cookies.Keys)
+            {
+                <li>@cookies[ck]</li>
+
+            }
+
+        </ul>
+        <h3>Headers: </h3>
+        <ul>
+       @foreach(var k in Request.Headers.Keys)
+           {
+            
+            <li>@k :  @Request.Headers[k]</li>
+
+                }
+                
+            </ul>
+
+        <h3>Body:</h3>
+        <text>
+            @requestBody
+        </text>
+    </div>
+</div>
